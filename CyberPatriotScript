@@ -524,12 +524,12 @@ dpkgName=("john john-data" "openbsd-inetd telnetd" "logkeys" " hydra-gtk hydra" 
 tLen=${#packageName[@]}		#syntax to find total length of array
 for (( i=0; $i<$tLen; i++)); do
 	if [[ $(dpkg-query --list | grep -ic ${packageName[$i]}) -ne 0 ]]; then
-echo -n "Remove ${packageName[$i]} ? [Y/N]" #the -n option means don’t add new line after output
-read option
-if [[ $option =~ ^[Yy]$ ]]; then
+		echo -n "Remove ${packageName[$i]} ? [Y/N]" #the -n option means don’t add new line after output
+		read option
+		if [[ $option =~ ^[Yy]$ ]]; then
 			dpkg --purge ${dpkgName[$i]}  
-fi
-fi
+		fi
+	fi
 done;
 
 
@@ -595,13 +595,13 @@ if [[ $option =~ ^[Yy]$ ]]
 then
  	apt-get -y install vsftpd > /dev/null 2>&1 
  	# Disable anonymous uploads
- 	 sed -i '/^anon_upload_enable/ c\anon_upload_enable no   #' /etc/vsftpd.conf # outdated?
- 	 sed -i '/^anonymous_enable/ c\anonymous_enable=NO  #' /etc/vsftpd.conf
-	  # FTP user directories use chroot
-	  sed -i '/^chroot_local_user/ c\chroot_local_user=YES  #' /etc/vsftpd.conf
-	  service vsftpd restart
+ 	sed -i '/^anon_upload_enable/ c\anon_upload_enable no   #' /etc/vsftpd.conf # outdated?
+ 	sed -i '/^anonymous_enable/ c\anonymous_enable=NO  #' /etc/vsftpd.conf
+	# FTP user directories use chroot
+	sed -i '/^chroot_local_user/ c\chroot_local_user=YES  #' /etc/vsftpd.conf
+	service vsftpd restart
 else
-	  dpkg --purge vsftpd > /dev/null 2>&1 
+	dpkg --purge vsftpd > /dev/null 2>&1 
 fi
 
 
